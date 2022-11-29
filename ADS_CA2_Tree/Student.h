@@ -59,6 +59,7 @@ public:
 	std::size_t hash() const
 	{
 		//What is the size of size_t? https://www.geeksforgeeks.org/size_t-data-type-c-language/
+		//What are these numbers? https://en.wikipedia.org/wiki/List_of_prime_numbers#The_first_1000_prime_numbers
 		size_t hash = std::hash<string>()(this->make)
 			+ 31 * std::hash<int>()(this->year)
 			+ 57 * std::hash<double>()(this->price)
