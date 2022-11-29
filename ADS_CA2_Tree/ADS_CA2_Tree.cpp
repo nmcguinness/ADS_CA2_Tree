@@ -2,12 +2,13 @@
 //
 
 #include <iostream>
-#include "Student.h"
+#include "Car.h"
+#include "Date.h"
 using namespace std;
 
 void demoSimpleHash();
 void demoDateHash();
-void demoReadFromFileToStudent();
+void demoReadFromFileToCar();
 
 int main()
 {
@@ -17,8 +18,8 @@ int main()
 	cout << endl << "demoDateHash()..........." << endl;
 	demoDateHash();
 
-	cout << endl << "demoReadFromFileToStudent()..........." << endl;
-	demoReadFromFileToStudent();
+	cout << endl << "demoReadFromFileToCar()..........." << endl;
+	demoReadFromFileToCar();
 
 	return 0;
 }
@@ -49,7 +50,7 @@ void demoDateHash() {
 	cout << "hash[" << myDate << "]: " << myDate.hash() << endl;
 }
 
-void demoReadFromFileToStudent()
+void demoReadFromFileToCar()
 {
 	//TODO
 }

@@ -5,9 +5,9 @@
 using namespace std;
 
 /// <summary>
-/// Represents a row of data in a CSV file of Student records
+/// Represents a row of data in a CSV file of Car records
 /// </summary>
-class Student {
+class Car {
 #pragma region Fields
 	string make;
 	int year;
@@ -18,7 +18,7 @@ class Student {
 public:
 
 #pragma region Constructors
-	Student(string make, int year, double price, Date date)
+	Car(string make, int year, double price, Date date)
 		: make(make), year(year), price(price), date(date)
 	{
 	}
@@ -33,7 +33,7 @@ public:
 
 #pragma region Operators & Hash
 
-	bool operator==(const Student& student)
+	bool operator==(const Car& student)
 	{
 		return this->make == student.make
 			&& this->year == student.year
@@ -41,7 +41,7 @@ public:
 			&& this->date == student.date;
 	}
 
-	friend ostream& operator<<(ostream& output, Student& student) {
+	friend ostream& operator<<(ostream& output, Car& student) {
 		output << student.make << ",";
 		output << student.year << ",";
 		output << student.price << ",";
@@ -49,7 +49,7 @@ public:
 		return output;
 	}
 
-	friend istream& operator>>(istream& input, Student& student) {
+	friend istream& operator>>(istream& input, Car& student) {
 		string studentAsStr;
 		input >> studentAsStr;
 
