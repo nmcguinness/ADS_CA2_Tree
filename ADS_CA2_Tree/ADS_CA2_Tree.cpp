@@ -2,19 +2,54 @@
 //
 
 #include <iostream>
+#include "Student.h"
+using namespace std;
+
+void demoSimpleHash();
+void demoDateHash();
+void demoReadFromFileToStudent();
 
 int main()
 {
-    std::cout << "Hello World!\n";
+	cout << endl << "demoSimpleHash()..........." << endl;
+	demoSimpleHash();
+
+	cout << endl << "demoDateHash()..........." << endl;
+	demoDateHash();
+
+	cout << endl << "demoReadFromFileToStudent()..........." << endl;
+	demoReadFromFileToStudent();
+
+	return 0;
 }
 
-// Run program: Ctrl + F5 or Debug > Start Without Debugging menu
-// Debug program: F5 or Debug > Start Debugging menu
+void demoSimpleHash() {
+	//hasher for strings
+	hash<string> hasherStr;
+	string email = "john.smith@hotmail.com";
+	cout << "hash[" << email << "]: " << hasherStr(email) << endl;
 
-// Tips for Getting Started: 
-//   1. Use the Solution Explorer window to add/manage files
-//   2. Use the Team Explorer window to connect to source control
-//   3. Use the Output window to see build output and other messages
-//   4. Use the Error List window to view errors
-//   5. Go to Project > Add New Item to create new code files, or Project > Add Existing Item to add existing code files to the project
-//   6. In the future, to open this project again, go to File > Open > Project and select the .sln file
+	//hasher for doubles
+	hash<double> hasherDbl;
+	double price = 123123.322;
+	cout << "hash[" << price << "]: " << hasherDbl(price) << endl;
+
+	//we can re-use a hasher
+	double weight = 12345.9897;
+	cout << "hash[" << weight << "]: " << hasherDbl(weight) << endl;
+
+	//we can store the hash value using size_t (basically an unsigned int)
+	size_t myHash = hasherStr("this is a hash value store in a uint");
+	cout << myHash << endl;
+}
+
+void demoDateHash() {
+	Date myDate(25, 12, 2022);
+	cout << myDate << endl;
+	cout << "hash[" << myDate << "]: " << myDate.hash() << endl;
+}
+
+void demoReadFromFileToStudent()
+{
+	//TODO
+}
