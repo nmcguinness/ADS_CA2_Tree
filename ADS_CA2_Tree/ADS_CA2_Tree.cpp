@@ -2,6 +2,8 @@
 //
 
 #include <iostream>
+#include <vector>
+#include "Utilities.h"
 #include "Car.h"
 #include "Date.h"
 using namespace std;
@@ -52,5 +54,27 @@ void demoDateHash() {
 
 void demoReadFromFileToCar()
 {
-	//TODO
+	//TODO - read one line from the CSV here...
+
+	vector<string> rowFromCSV = splitString("ford, 2012, 1299.55, 25/12/2022", ",");
+
+	if (rowFromCSV.size() == 4)
+	{
+		string make = rowFromCSV[0];
+		int year = stoi(rowFromCSV[1]);
+		double price = stod(rowFromCSV[2]);
+		vector<string> dateWords = splitString(rowFromCSV[3], "/");
+
+		if (dateWords.size() == 3)
+		{
+			int date_day = stoi(dateWords[0]);
+			int date_month = stoi(dateWords[1]);
+			int date_year = stoi(dateWords[2]);
+
+			Date registrationDate(date_day, date_month, date_year);
+			Car myCar(make, year, price, registrationDate);
+
+			cout << "Car: " << myCar << endl;
+		}
+	}
 }

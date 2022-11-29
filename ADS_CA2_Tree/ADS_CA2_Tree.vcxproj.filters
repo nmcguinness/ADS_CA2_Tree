@@ -35,5 +35,8 @@
     <ClInclude Include="Date.h">
       <Filter>Header Files\Data</Filter>
     </ClInclude>
+    <ClInclude Include="Utilities.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
