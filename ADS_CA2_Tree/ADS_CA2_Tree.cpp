@@ -85,7 +85,7 @@ void demoParseString()
 	}
 }
 
-//best - supports rows of data that contain commas and parenthesis
+//best - supports rows of data that contain commas and parenthesis - thanks for Derek!
 void demoCSVToObject()
 {
 	//note: data is a sub-folder under the folder with main CPP file
