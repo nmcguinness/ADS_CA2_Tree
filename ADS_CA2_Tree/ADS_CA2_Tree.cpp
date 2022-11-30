@@ -10,7 +10,8 @@ using namespace std;
 
 void demoSimpleHash();
 void demoDateHash();
-void demoReadFromFileToCar();
+void demoParseString();
+void demoCSVToObject();
 
 int main()
 {
@@ -20,8 +21,11 @@ int main()
 	cout << endl << "demoDateHash()..........." << endl;
 	demoDateHash();
 
-	cout << endl << "demoReadFromFileToCar()..........." << endl;
-	demoReadFromFileToCar();
+	cout << endl << "demoParseString()..........." << endl;
+	demoParseString();
+
+	cout << endl << "demoCSVToObject()..........." << endl;
+	demoCSVToObject();
 
 	return 0;
 }
@@ -52,11 +56,13 @@ void demoDateHash() {
 	cout << "hash[" << myDate << "]: " << myDate.hash() << endl;
 }
 
-void demoReadFromFileToCar()
+//useful - fails when a row of data contains a field (e.g., address) which contains commas
+void demoParseString()
 {
-	//TODO - read one line from the CSV here...
+	string str = "ford, 2012, 1299.55, 25/12/2022";
+	string delimiter = ",";
 
-	vector<string> rowFromCSV = splitString("ford, 2012, 1299.55, 25/12/2022", ",");
+	vector<string> rowFromCSV = splitString(str, delimiter);
 
 	if (rowFromCSV.size() == 4)
 	{
@@ -76,5 +82,20 @@ void demoReadFromFileToCar()
 
 			cout << "Car: " << myCar << endl;
 		}
+	}
+}
+
+//best - supports rows of data that contain commas and parenthesis
+void demoCSVToObject()
+{
+	//note: data is a sub-folder under the folder with main CPP file
+	string fileName = "data/data_4.csv";
+	vector<vector<string>> allData = readDelimitedRows(fileName);
+
+	for (vector<string> row : allData) {
+		for (string field : row) {
+			cout << field << ",";
+		}
+		cout << endl;
 	}
 }
