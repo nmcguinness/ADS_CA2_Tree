@@ -6,12 +6,14 @@
 #include "Utilities.h"
 #include "Car.h"
 #include "Date.h"
+#include "Benchmark.h"
 using namespace std;
 
 void demoSimpleHash();
 void demoDateHash();
 void demoParseString();
 void demoCSVToObject();
+void demoBenchmarkVectorFindLast();
 
 int main()
 {
@@ -27,8 +29,13 @@ int main()
 	cout << endl << "demoCSVToObject()..........." << endl;
 	demoCSVToObject();
 
+	cout << endl << "demoBenchmarkVectorFindLast()..........." << endl;
+	demoBenchmarkVectorFindLast();
+
 	return 0;
 }
+
+/*********************************** Hashing Objects ***********************************/
 
 void demoSimpleHash() {
 	//hasher for strings
@@ -55,6 +62,25 @@ void demoDateHash() {
 	cout << myDate << endl;
 	cout << "hash[" << myDate << "]: " << myDate.hash() << endl;
 }
+
+/*********************************** File IO ***********************************/
+
+//best - supports rows of data that contain commas and parenthesis - thanks for Derek!
+void demoCSVToObject()
+{
+	//note: data is a sub-folder under the folder with main CPP file
+	string fileName = "data/data_4.csv";
+	vector<vector<string>> allData = readDelimitedRows(fileName);
+
+	for (vector<string> row : allData) {
+		for (string field : row) {
+			cout << field << ",";
+		}
+		cout << endl;
+	}
+}
+
+/*********************************** String parsing ***********************************/
 
 //useful - fails when a row of data contains a field (e.g., address) which contains commas
 void demoParseString()
@@ -85,17 +111,82 @@ void demoParseString()
 	}
 }
 
-//best - supports rows of data that contain commas and parenthesis - thanks for Derek!
-void demoCSVToObject()
-{
-	//note: data is a sub-folder under the folder with main CPP file
-	string fileName = "data/data_4.csv";
-	vector<vector<string>> allData = readDelimitedRows(fileName);
+/*********************************** Benchmarking ***********************************/
 
-	for (vector<string> row : allData) {
-		for (string field : row) {
-			cout << field << ",";
-		}
-		cout << endl;
+/// <summary>
+/// Search for a T in a vector of T objects
+/// </summary>
+/// <typeparam name="T"></typeparam>
+/// <param name="data"></param>
+/// <param name="value"></param>
+/// <returns></returns>
+template <typename T>
+int linearSearch(vector<T> data, T value)
+{
+	for (int i = 0; i < data.size(); i++)
+		if (data[i] == value) return i;
+	return -1;
+}
+
+/// <summary>
+/// A functor that we make to test the linearSearch in a vector - we need a functor because that's what measureTime takes!
+/// </summary>
+class LinearStringSearchFunctor {
+	vector<string> data;
+	string target;
+public:
+	LinearStringSearchFunctor(vector<string> data, string target) : data(data), target(target) {};
+
+	int operator()() {
+		return linearSearch(data, target);
 	}
+};
+
+vector<string> loadData(int N)
+{
+	vector<string> data;
+
+	//load data (e.g., random strings) into a vector (this is like your tree or linked list)
+	int stringLength = 4;
+
+	for (int i = 0; i < N; i++)
+		data.push_back(getRandomString(stringLength));
+
+	return data;
+}
+
+//lets benchmark how long it takes to find the last string in a vector
+//we should repeat the test below and run multiple tests on finding last string in a vector and get average run time
+void demoBenchmarkVectorFindLast() {
+	//number of strings in the vector (like your CSV where N=1000,10000,100000)
+	int N = 1000;
+
+	//get some data (yours would be data from CSV in a list/vector vs your BinaryTree)
+	vector<string> data = loadData(N);
+
+	//pick the last string in the structure
+	string searchString = data[data.size() - 1];
+
+	/******************************* IMPORTANT PART > *******************************/
+	int numberOfTests = 100;
+	double totalTestTimeInNS = 0;
+	for (int i = 0; i < numberOfTests; i++)
+	{
+		//make up the functor
+		LinearStringSearchFunctor searchFunc(data, searchString);
+
+		//pass the functor into measureTime
+		totalTestTimeInNS += measureTime(searchFunc);
+	}
+
+	//get average across all tests
+	double averageSearchTimeInMS = totalTestTimeInNS / numberOfTests;
+
+	//convert ns to ms
+	averageSearchTimeInMS /= 1000;
+
+	//see how long it takes to find the string
+	cout << "Vector - Average last element search time [Nr = " << N << ",Tests = " << numberOfTests << "]: " << averageSearchTimeInMS << "ms" << endl;
+
+	/******************************* < IMPORTANT PART *******************************/
 }

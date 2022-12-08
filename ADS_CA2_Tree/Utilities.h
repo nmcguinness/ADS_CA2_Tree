@@ -6,7 +6,15 @@
 #include <vector>
 #include <string>
 #include <regex>
+#include <random>
 using namespace std;
+
+//method declarations
+vector<vector<string>> readDelimitedRows(string fileName);
+string to_string(char* a, int size);
+vector<string> splitString(string str, string delimiter);
+string getRandomLowercase(int minLength, int maxLength);
+string to_string(char* a, int size);
 
 /// <summary>
 /// Reads a row, splits into fields (using comma delimiter) and returns a vector of vectors
@@ -76,4 +84,45 @@ vector<string> splitString(string str, string delimiter)
 	words.push_back(str);
 
 	return words;
+}
+
+/// <summary>
+/// Generates a random string of user-defined length
+/// </summary>
+/// <param name="length"></param>
+/// <returns></returns>
+/// <see>https://inversepalindrome.com/blog/how-to-create-a-random-string-in-cpp</see>
+string getRandomString(size_t length)
+{
+	const string CHARACTERS = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+
+	random_device random_device;
+	mt19937 generator(random_device());
+	uniform_int_distribution<> distribution(0, CHARACTERS.size() - 1);
+
+	std::string random_string;
+
+	for (std::size_t i = 0; i < length; ++i)
+	{
+		random_string += CHARACTERS[distribution(generator)];
+	}
+
+	return random_string;
+}
+
+/// <summary>
+/// Converts char array to string
+/// </summary>
+/// <param name="a"></param>
+/// <param name="size"></param>
+/// <returns></returns>
+/// <see>https://www.geeksforgeeks.org/convert-character-array-to-string-in-c/</see>
+string to_string(char* a, int size)
+{
+	int i;
+	string s = "";
+	for (i = 0; i < size; i++) {
+		s = s + a[i];
+	}
+	return s;
 }

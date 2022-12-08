@@ -1,0 +1,33 @@
+1. Repository
+  - Add your lecturer as a developer, make regular commits
+  - Commits should be well-worded and descriptive (i.e., "verb" the "noun")
+2. Coding Standards
+  - Class - add comments to describe: purpose, bugs, exceptions
+  - Methods - add comments to describe: purpose, bugs, exceptions
+3. Unit Testing
+   - If you have methods e.g. someMethod(parameters)
+     - Add tests for success, failure
+     - Add tests for exception testing
+4. Solution Architecture
+     - Do not add I/O in wrong methods (e.g. adding cout, cin to constructors)
+     - your class that stores CSV row (e.g., Record/Customer/Data)
+        - should represent data structure but not include the file I/O code (e.g., Record::readCSV())
+        - instead create utilities/readCSV() or RecordHelper::readCSV()
+     - Main should not have I/O, that is, a DOS prompt!!! Interfaces are forbidden! User testing is king!
+     - File path should be relative not absolute
+        - create a folder (e.g., "data/sfsdf.csv" ) this folder should be in same folder as your CPP files   
+5. Benchmarking
+   - Use your utilities/measureTime() 
+   - See https://2023-moodle.dkit.ie/pluginfile.php/302617/mod_resource/content/2/BigO.cpp
+   - To benchmark you should:
+		1. Load N=1000 records from the CSV file into a vector/list.
+      2. Store the records in your tree.
+      3. Store the records in your LinkedList.
+      4. Pick a random record from the vector/list.
+      5. Use measureFunc() to record time to find record in the list and tree.
+      6. Repeat steps 4-5 M times (you pick a suitable M e.g. 10, 100) and get average search time.
+      7. Repeat steps 1-6 for N=1000,10000,100000 file sizes.
+ 
+
+
+
